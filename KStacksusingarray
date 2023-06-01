@@ -1,0 +1,90 @@
+class Kstacks{
+    int arr[];
+    int top[];
+    int next[];
+    int freeindex;
+    int no_of_stacks;
+    int size;
+    Kstacks(int s,int n){
+        size=s;
+        no_of_stacks=n;
+        arr=new int[size];
+        next=new int[size];
+        top=new int[no_of_stacks];
+        //intializing top array
+        for(int i=0;i<no_of_stacks;i++){
+            top[i]=-1;
+        }
+        //intializing next array
+        for(int i=0;i<size-1;i++){
+            next[i]=i+1;
+        }
+        next[size-1]=-1;
+        //intializing the freeindex
+        freeindex=0;
+    }
+    boolean isfull(){
+        return (freeindex==-1);
+    }
+    boolean isEmpty(int stack_number){
+        if(top[stack_number]==-1){
+            return true;
+        }
+        return false;
+    }
+    void push(int ele,int stack_number){
+        if(isfull()){
+            System.out.println("Stack Overflow\n");
+            return;
+        }
+        //Gettiing the free position
+        int position=freeindex;
+        
+        //Setting the  new free position
+        freeindex=next[position];
+
+        //now Setting the next element in stack
+        next[position]=top[stack_number];
+
+        //now setting the stack's top element
+        top[stack_number]=position;
+
+        //setting the array's value
+        arr[position]=ele;
+    }
+    int pop(int stack_number){
+        if(isEmpty(stack_number)){
+            System.out.println("Given Stack is empty\n");
+            return Integer.MIN_VALUE;
+        }
+        //Getting the top element of stack
+        int key=top[stack_number];
+
+        //Setting the top of stack's value
+        top[stack_number]=next[key];
+
+        //setting the  next's value
+        next[key]=freeindex;
+
+        //setting free's value;
+        freeindex=key;
+        return arr[key];
+    }
+    public static void main(String [] args){
+        Kstacks obj=new Kstacks(6,3);
+        obj.push(100,0);
+        obj.push(200,0);
+        obj.push(300,0);
+        obj.push(400,1);
+        System.out.println(obj.pop(0));
+        obj.push(500,0);
+        obj.push(600,0);
+        obj.push(700,0);  
+        obj.push(800,0);       
+        for(int i=0;i<obj.arr.length;i++){
+            System.out.print(obj.arr[i]);
+        }
+    }
+
+
+}
