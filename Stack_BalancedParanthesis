@@ -1,3 +1,37 @@
+//FIRST SOLUTION 
+
+class Solution {
+    public boolean isValid(String s) {
+        ArrayDeque<Character> s1=new ArrayDeque<>();
+        for(int i=0;i<s.length();i++){
+            char ch=s.charAt(i);
+            if(s1.isEmpty()){
+                s1.push(ch);   
+            }
+            else if(ch==')' && s1.peek()=='('){
+                s1.pop();
+            }
+            else if(ch=='}' && s1.peek()=='{'){
+                s1.pop();
+            }
+            else if(ch==']' && s1.peek()=='['){
+                s1.pop();
+            }
+            else{
+                s1.push(ch);
+            }
+        }
+        if(s1.isEmpty()){
+            return true;
+        }
+        return false;
+    }
+}
+
+
+
+//SECOND SOLUTION 
+
 class Solution {
     public boolean isValid(String s) {
         ArrayDeque<Character> s1=new ArrayDeque<>();
